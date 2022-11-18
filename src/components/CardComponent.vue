@@ -3,13 +3,13 @@
         <img :src="item.poster_path ? imgFilm + item.poster_path : '/img/imgNotFound.png'">
         <ul class="style-none">
             <li>
-                <h4>Titolo: {{ item.title }}</h4>
+                <h4>{{ item.original_title || item.original_name }}</h4>
             </li>
             <li>
-                <p>Titolo originale: {{ item.original_title }}</p>
+                <p>{{ item.title || item.name }}</p>
             </li>
             <li>
-                <p>Voto: {{ item.vote_average }}</p>
+                <span v-for="n in 5" class="fa-star" :class="(n <= star) ? 'fa-solid' : 'fa-regular'"></span>
             </li>
             <li>
                 <p v-if="availableFlag.includes(item.original_language)" class="icon-flag">
@@ -33,7 +33,12 @@ export default {
             ],
             imgFilm: 'https://image.tmdb.org/t/p/w342'
         }
-    }
+    },
+    computed: {
+        star() {
+            return Math.ceil(this.item.vote_average / 2);
+        }
+    },
 }
 </script>
 
@@ -70,5 +75,9 @@ export default {
         height: 20px;
         width: 30px
     }
+}
+
+.fa-star {
+    color: yellow;
 }
 </style>
