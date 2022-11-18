@@ -1,7 +1,8 @@
 <template>
   <AppHeader />
   <main>
-    <ItemList :items="store.movie" />
+    <ItemList :items="store.movie" title="Movies" />
+    <ItemList :items="store.tv" title="Tv Series" />
   </main>
 </template>
 
@@ -27,6 +28,7 @@ export default {
       // controllo per non ripetere la ricerca
       if (newVal != oldVal) {
         this.getMovie();
+        this.getSeries();
       }
     }
   },
@@ -34,14 +36,21 @@ export default {
     // metodo per prendere il movie
     getMovie() {
       // perscorso fino a movie
-      const apiurl = store.baseUrl + store.endpoint;
+      const apiurl = store.baseUrl + store.endpoint.movie;
       const params = store.params;
       axios.get(apiurl, { params }).then((res) => {
         // i dati sono in
         console.log(res.data.results);
-
         store.movie = res.data.results;
-
+      });
+    },
+    getSeries() {
+      // perscorso fino a tv
+      const apiurl = store.baseUrl + store.endpoint.tv;
+      const params = store.params;
+      axios.get(apiurl, { params }).then((res) => {
+        console.log(res.data.results);
+        store.tv = res.data.results;
       });
     }
   },

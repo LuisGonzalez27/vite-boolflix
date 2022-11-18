@@ -1,7 +1,7 @@
 <template>
     <header>
         <div class="container title ">
-            <h1>BooFlix</h1>
+            <img class="logo" src="/img/netflixLogo.png" alt="Logo">
             <AppSearch />
         </div>
     </header>
@@ -20,7 +20,7 @@ export default {
 @use "../assets/styles/partials/variables" as *;
 
 header {
-    background-color: black;
+    background-color: $black;
 }
 
 .title {
@@ -31,7 +31,7 @@ header {
     justify-content: space-between;
 }
 
-h1 {
-    color: red;
+.logo {
+    height: 40px;
 }
 </style>

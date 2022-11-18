@@ -1,6 +1,6 @@
 <template>
     <div class="my-card" style="height: 520px;">
-        <img :src="imgFilm + item.poster_path" :alt="item.title">
+        <img :src="item.poster_path ? imgFilm + item.poster_path : '/img/imgNotFound.png'">
         <ul class="style-none">
             <li>
                 <h4>Titolo: {{ item.title }}</h4>
@@ -44,7 +44,6 @@ export default {
     width: 220px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 20px 10px;
     background-color: $black;
     color: $white;
@@ -64,10 +63,6 @@ export default {
             }
         }
     }
-}
-
-img {
-    width: 100%;
 }
 
 .icon-flag {
