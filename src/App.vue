@@ -1,50 +1,51 @@
 <template>
-  <AppHeader @filterTitle="takeTitles" />
+  <AppHeader />
   <main>
-    <AppResults />
+    <ItemList :items="store.movie" />
   </main>
 </template>
 
 <script>
 import axios from 'axios';
-import { store } from "./store";
+import { store } from './store';
 import AppHeader from './components/AppHeader.vue';
-import AppResults from './components/AppResults.vue';
+import ItemList from './components/ItemList.vue';
 
 export default {
   components: {
     AppHeader,
-    AppResults,
+    ItemList
   },
   data() {
     return {
-      store,
-      endPoint: "search/movie",
-      apiKey: "?api_key=392a39c3c1cdf80661f2e6e2e080e8e0",
-      apiQuery: "&query=",
-      apiLanguage: "&language=it-IT",
+      store
+    }
+  },
+  // osserva la chiamata
+  watch: {
+    'store.params.query'(newVal, oldVal) {
+      // controllo per non ripetere la ricerca
+      if (newVal != oldVal) {
+        this.getMovie();
+      }
     }
   },
   methods: {
-    takeTitles() {
-      let options = null;
-      if (store.search.title) {
-        options = {
-          params: {
-            title: store.search.title,
-          },
-        };
-      };
+    // metodo per prendere il movie
+    getMovie() {
+      // perscorso fino a movie
+      const apiurl = store.baseUrl + store.endpoint;
+      const params = store.params;
+      axios.get(apiurl, { params }).then((res) => {
+        // i dati sono in
+        console.log(res.data.results);
 
-      const movieApi = store.apiURL + this.endPoint + this.apiKey + this.apiQuery + this.store.search.title + this.apiLanguage;
+        store.movie = res.data.results;
 
-      axios.get(movieApi, options).then((res) => {
-        store.movieList = res.data.results;
       });
-    },
+    }
   },
-};
-
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,32 +1,30 @@
 <template>
     <div class="my-card" style="height: 520px;">
-        <img :src="imgFilm + resObtained.poster_path" :alt="resObtained.title">
+        <img :src="imgFilm + item.poster_path" :alt="item.title">
         <ul class="style-none">
             <li>
-                <h4>Titolo: {{ resObtained.title }}</h4>
+                <h4>Titolo: {{ item.title }}</h4>
             </li>
             <li>
-                <p>Titolo originale: {{ resObtained.original_title }}</p>
+                <p>Titolo originale: {{ item.original_title }}</p>
             </li>
             <li>
-                <p>Voto: {{ resObtained.vote_average }}</p>
+                <p>Voto: {{ item.vote_average }}</p>
             </li>
             <li>
-                <p v-if="availableFlag.includes(resObtained.original_language)" class="icon-flag">
-                    <img :src="'/img/' + resObtained.original_language + '.png'"
-                        :alt="resObtained.original_language + 'Flag'">
+                <p v-if="availableFlag.includes(item.original_language)" class="icon-flag">
+                    <img :src="'/img/' + item.original_language + '.png'" :alt="item.original_language + 'Flag'">
                 </p>
-                <p v-else> Lingua :{{ resObtained.original_language }}</p>
+                <p v-else>Lingua :{{ item.original_language }}</p>
             </li>
         </ul>
     </div>
 </template>
-  
+
 <script>
 export default {
-    name: "CardComponent",
     props: {
-        resObtained: Object,
+        item: Object
     },
     data() {
         return {
@@ -36,9 +34,9 @@ export default {
             imgFilm: 'https://image.tmdb.org/t/p/w342'
         }
     }
-};
+}
 </script>
-  
+
 <style lang="scss" scoped>
 @use '../assets/styles/partials/variables' as*;
 
@@ -66,6 +64,10 @@ export default {
             }
         }
     }
+}
+
+img {
+    width: 100%;
 }
 
 .icon-flag {
